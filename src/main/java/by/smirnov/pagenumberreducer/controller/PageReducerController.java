@@ -1,8 +1,12 @@
 package by.smirnov.pagenumberreducer.controller;
 
+import by.smirnov.pagenumberreducer.exception.ErrorContainer;
 import by.smirnov.pagenumberreducer.response.ReducerResponse;
 import by.smirnov.pagenumberreducer.service.PageReducerService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +30,17 @@ public class PageReducerController {
     @Operation(
             method = "GET",
             summary = "Finding a user by ID",
-            responses = {@ApiResponse(responseCode = "200", description = "Successful Request"),
-                    @ApiResponse(responseCode = "400", description = "Bad Request"),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error")},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful Request"),
+                    @ApiResponse(responseCode = "400", description = "Bad Request. " +
+                            "All page numbers must be not negative integers, separated by comas", content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = ErrorContainer.class)))
+                    }),
+                    @ApiResponse(responseCode = "500", description = "Unexpected Internal Server Error", content =
+                            @Content)
+            },
             description = "This method transforms a list of page numbers in one String line, separated by ',' " +
                     "into ascending reduced format of a String line for printer. " +
                     "E.g.: \"1,3,32,5,11,7,6,19,2,21,4,8,22,23\" -> \"1-8,11,19,21-23,32\". " +
