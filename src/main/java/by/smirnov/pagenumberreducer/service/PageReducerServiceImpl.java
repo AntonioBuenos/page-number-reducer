@@ -1,5 +1,6 @@
 package by.smirnov.pagenumberreducer.service;
 
+import by.smirnov.pagenumberreducer.response.ReducerResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -15,7 +16,7 @@ public class PageReducerServiceImpl implements PageReducerService {
     public static final String REDUCE_FORMAT = "%d-%d";
 
     @Override
-    public String reduce(String numbers) {
+    public ReducerResponse reduce(String numbers) {
         List<Integer> sorted = sort(numbers);
         StringJoiner joiner = new StringJoiner(DELIMITER);
         LinkedList<Integer> buffer = new LinkedList<>();
@@ -30,7 +31,7 @@ public class PageReducerServiceImpl implements PageReducerService {
         }
         if (!buffer.isEmpty()) joiner.add(checkAndFormat(buffer));
 
-        return joiner.toString();
+        return new ReducerResponse(numbers, joiner.toString());
     }
 
     private List<Integer> sort(String numbers) {

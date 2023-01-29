@@ -1,6 +1,8 @@
 package by.smirnov.pagenumberreducer.service;
 
+import by.smirnov.pagenumberreducer.response.ReducerResponse;
+
 public interface PageReducerService {
 
-    String reduce(String numbers);
+    ReducerResponse reduce(String numbers);
 }
