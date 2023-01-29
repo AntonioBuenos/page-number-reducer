@@ -6,11 +6,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.StringJoiner;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static by.smirnov.pagenumberreducer.exception.BadRequestException.ERROR_BAD_REQUEST;
+import static by.smirnov.pagenumberreducer.exception.BadRequestException.ERROR_EMPTY;
 import static by.smirnov.pagenumberreducer.exception.BadRequestException.ERROR_NEGATIVE;
 import static by.smirnov.pagenumberreducer.exception.BadRequestException.ERROR_NULL;
 
@@ -22,8 +23,7 @@ public class PageReducerServiceImpl implements PageReducerService {
 
     @Override
     public ReducerResponse reduce(String numbers) {
-        List<Integer> sorted = sort(numbers);
-        if(sorted.get(0)<0) throw new BadRequestException(ERROR_NEGATIVE);
+        LinkedList<Integer> sorted = sort(numbers);
         StringJoiner joiner = new StringJoiner(DELIMITER);
         LinkedList<Integer> buffer = new LinkedList<>();
         for (Integer number : sorted) {
@@ -40,21 +40,26 @@ public class PageReducerServiceImpl implements PageReducerService {
         return new ReducerResponse(numbers, joiner.toString());
     }
 
-    private List<Integer> sort(String numbers) {
-        List<Integer> sorted = null;
-        try{
+    private LinkedList<Integer> sort(String numbers) {
+        LinkedList<Integer> sorted;
+        try {
             sorted = Arrays
                     .stream(numbers.split(DELIMITER))
                     .map(String::trim)
+                    .filter(Predicate.not(String::isEmpty))
                     .map(Integer::parseInt)
                     .sorted()
                     .distinct()
-                    .collect(Collectors.toList());
-        } catch (NullPointerException e){
+                    .collect(Collectors.toCollection(LinkedList::new));
+        } catch (NullPointerException e) {
             throw new BadRequestException(ERROR_NULL);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new BadRequestException(ERROR_BAD_REQUEST);
-        }return sorted;
+        }
+        if (sorted.isEmpty()) throw new BadRequestException(ERROR_EMPTY);
+        else if (sorted.getFirst() < 0) throw new BadRequestException(ERROR_NEGATIVE);
+        else if (sorted.getFirst() == 0) sorted.removeFirst();
+        return sorted;
     }
 
     private boolean isNextInRange(Integer previous, Integer number) {
