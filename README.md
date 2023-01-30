@@ -43,10 +43,39 @@ _______
 
 ### App use, running and deployment:
 
+In order to build the app, you need to download and unpack the recent version of
+Maven (https://maven.apache.org/download.cgi). Then, you will need to install a
+Java JDK 11 (or higher). Make sure that you can run java and Maven from the command line.
+
+Run from the command line:
+```
+mvn clean install
+```
+to compile the code, run tests, put results in a jar file in the target directory and place it to a local repository.
+
+You can also use Maven commands via command line:
+```
+mvn compile
+```
+to compile the code and check for errors;
+```
+mvn test
+```
+to compile the code and run tests;
+```
+mvn package
+```
+to compile and pack into jar file with no tests run. 
+
 You can run the app locally at [Localhost address](http://localhost:8080/reducedPageNumbers) via:
 
-1) PagenumberreducerApplication Spring Boot starter, or
-2) Docker container with Dockerfile and docker-compose.yml in the app root.
+1) PagenumberreducerApplication Spring Boot starter in IDE (like NetBeans, Intellij IDEA, or
+   Eclipse), or
+2) command line:
+   ```
+   java -jar <path to a jar file>
+   ```
+3) Docker container with Dockerfile and docker-compose.yml in the app root.
    Or you can deploy it to your server (you may need to amend docker-compose.yml).
 
 _______
