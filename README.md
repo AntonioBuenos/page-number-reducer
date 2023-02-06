@@ -7,7 +7,6 @@ Spring-based Project for transforming a range of page numbers to a reduced print
 _______
 
 ### Description:
-
 Page Numbers Reducer Project's only functionality is as follows:
 
 1) Client shall make a GET-request with a line of page numbers. Example:
