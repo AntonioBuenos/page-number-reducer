@@ -16,7 +16,7 @@ class PageReducerServiceImplTest {
 
     @BeforeAll
     static void init() {
-        service = new PageReducerServiceImpl();
+        service = new PageReducerServiceImpl(new SorterServiceImpl());
     }
 
     @ParameterizedTest
