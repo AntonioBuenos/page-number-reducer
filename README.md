@@ -24,7 +24,7 @@ GET /reducedPageNumbers?rawPageNumbers=<1,3,32,5,11,7,6,19,2,21,4,8,22,23>
 }
 ```
 
-3) All "0" and spaces between commas will be ignored. Any negative and non-Integer numbers as well as non-digit symbols
+3) All "0", negative numbers and spaces between commas will be ignored. Any non-Integer numbers as well as non-digit symbols
    will result a Bad Request response.
 4) Look springdoc documentation for more details.
 

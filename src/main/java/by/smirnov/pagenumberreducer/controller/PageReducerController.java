@@ -33,7 +33,7 @@ public class PageReducerController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Successful Request"),
                     @ApiResponse(responseCode = "400", description = "Bad Request. " +
-                            "All page numbers must be not negative integers, separated by comas", content = {
+                            "All page numbers must be integers, separated by comas", content = {
                             @Content(
                                     mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = ErrorContainer.class)))

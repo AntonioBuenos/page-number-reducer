@@ -18,7 +18,7 @@ public class PageReducerServiceImpl implements PageReducerService {
 
     @Override
     public ReducerResponse reduce(String numbers) {
-        LinkedList<Integer> sorted = sorterService.sort(numbers);
+/*        LinkedList<Integer> sorted = sorterService.sort(numbers);
         StringJoiner joiner = new StringJoiner(DELIMITER);
         LinkedList<Integer> buffer = new LinkedList<>();
         for (Integer number : sorted) {
@@ -32,10 +32,26 @@ public class PageReducerServiceImpl implements PageReducerService {
         }
         joiner.add(checkAndFormat(buffer));
 
+        return new ReducerResponse(numbers, joiner.toString());*/
+
+        Integer[] sorted = sorterService.sort(numbers);
+        StringJoiner joiner = new StringJoiner(DELIMITER);
+
+        int curr = 0, next = 0;
+        while (curr < sorted.length) {
+            while (++next < sorted.length && sorted[next] - sorted[next - 1] == 1);
+            if (next - curr > 2) {
+                joiner.add(String.format(REDUCE_FORMAT, sorted[curr], sorted[next - 1]));
+                curr = next;
+            } else {
+                for (; curr < next; curr++)
+                    joiner.add(String.valueOf(sorted[curr]));
+            }
+        }
         return new ReducerResponse(numbers, joiner.toString());
     }
 
-    private boolean isNextInRange(Integer previous, Integer number) {
+/*    private boolean isNextInRange(Integer previous, Integer number) {
         return previous == number - 1;
     }
 
@@ -52,5 +68,5 @@ public class PageReducerServiceImpl implements PageReducerService {
             }
         }
         return formatted.toString();
-    }
+    }*/
 }
