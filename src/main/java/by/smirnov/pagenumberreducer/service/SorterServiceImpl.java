@@ -9,7 +9,6 @@ import java.util.function.Predicate;
 import static by.smirnov.pagenumberreducer.constants.Constants.DELIMITER;
 
 @Service
-@Validated
 public class SorterServiceImpl implements SorterService {
 
     public Integer[] sort(String numbers) {

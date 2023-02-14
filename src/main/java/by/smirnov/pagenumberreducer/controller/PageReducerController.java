@@ -9,19 +9,15 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.ConstraintViolationException;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @RestController
 @RequiredArgsConstructor
@@ -56,15 +52,9 @@ public class PageReducerController {
                     "and reduced String line 'reduced'"
     )
     @GetMapping
-    public ResponseEntity<ReducerResponse> show(@NotNull @NotBlank String rawPageNumbers) {
+    public ResponseEntity<ReducerResponse> show(@NotNull @Pattern(regexp = "[\\d\\s-]+[\\d\\s,-]+[\\d\\s-]+") String rawPageNumbers) {
 
         ReducerResponse response = service.reduce(rawPageNumbers);
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
-        return new ResponseEntity<>("not valid due to validation error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

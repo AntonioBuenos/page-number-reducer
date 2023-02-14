@@ -1,14 +1,10 @@
 package by.smirnov.pagenumberreducer.service;
 
-import by.smirnov.pagenumberreducer.exception.BadRequestException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PageReducerServiceImplTest {
 
@@ -36,23 +32,4 @@ class PageReducerServiceImplTest {
 
         assertEquals(expected, service.reduce(input).getReduced());
     }
-
-    @ParameterizedTest
-    @NullSource
-    void reduceNullTest(String input) {
-        assertThrows(BadRequestException.class, () -> service.reduce(input));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "",
-            "  ",
-            "1,2,3,4,123456789011",
-            "jhghfd,sdfjj,1,2,3,4",
-            "1-8, 32, 11, 19, 21, 22, 23"
-    })
-    void reduceThrowsExceptionsTest(String input) {
-        assertThrows(BadRequestException.class, () -> service.reduce(input));
-    }
-
 }

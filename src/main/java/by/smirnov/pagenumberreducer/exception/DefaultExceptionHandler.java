@@ -1,5 +1,6 @@
 package by.smirnov.pagenumberreducer.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +12,7 @@ import java.util.UUID;
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
-    @ExceptionHandler({BadRequestException.class})
+    @ExceptionHandler({BadRequestException.class, NumberFormatException.class, ConstraintViolationException.class})
     public ResponseEntity<Object> handleBadRequestException(Exception e) {
         return new ResponseEntity<>(getErrorContainer(e), HttpStatus.BAD_REQUEST);
     }
