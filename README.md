@@ -32,10 +32,10 @@ _______
 
 ### Configuration:
 
-- JDK 11;
-- Spring 5;
+- JDK 17;
+- Spring 6;
 - REST API & Jackson;
-- Spring Boot 2.7.8;
+- Spring Boot 3.0.0;
 - Documentation: OpenAPI 3: springdoc 1.6.14, incl. swagger UI;
 - JUnit 5 tests.
 
@@ -45,7 +45,7 @@ _______
 
 In order to build the app, you need to download and unpack the recent version of
 Maven (https://maven.apache.org/download.cgi). Then, you will need to install a
-Java JDK 11 (or higher). Make sure that you can run java and Maven from the command line.
+Java JDK 17 (or higher). Make sure that you can run java and Maven from the command line.
 
 Run from the command line:
 ```
