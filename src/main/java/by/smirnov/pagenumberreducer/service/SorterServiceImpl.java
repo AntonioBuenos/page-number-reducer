@@ -1,7 +1,6 @@
 package by.smirnov.pagenumberreducer.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Arrays;
 import java.util.function.Predicate;

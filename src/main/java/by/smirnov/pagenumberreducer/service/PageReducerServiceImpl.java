@@ -4,7 +4,6 @@ import by.smirnov.pagenumberreducer.response.ReducerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.StringJoiner;
 
 import static by.smirnov.pagenumberreducer.constants.Constants.DELIMITER;
